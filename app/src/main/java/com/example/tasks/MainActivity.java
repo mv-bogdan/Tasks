@@ -5,15 +5,22 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
 
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
+    private TextView mTextCardView;
+    private TextView mTextQuantity;
+    private LinearLayout mLinearLayout;
+    private ArrayList<TextView> arrayCards = new ArrayList<>();
+    private int mNum = 0;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+  /*  private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -22,16 +29,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
             }
             return false;
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mTextQuantity = findViewById(R.id.textView_quantity);
+        mLinearLayout = findViewById(R.id.LinearLayoutCard);
+        //navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    public void onClickCreate(View view) {
+        TextView newTextView = new TextView(this);
+        mNum += 1;
+        newTextView.setText(Integer.toString(mNum));
+        arrayCards.add(newTextView);
+        mLinearLayout.addView(newTextView);
+    }
+
+    public void onClickShow(View view) {
+        mTextQuantity.setText(Integer.toString(arrayCards.size()));
+    }
 }
