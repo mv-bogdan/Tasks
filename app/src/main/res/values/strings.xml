@@ -6,4 +6,7 @@
     <string name="title_button_create">Create</string>
     <string name="title_button_show_quantity">Show</string>
     <string name="title_null">Null</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
