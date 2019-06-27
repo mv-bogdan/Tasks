@@ -1,4 +1,4 @@
-package com.example.tasks.database;
+package com.example.tasks.db;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
