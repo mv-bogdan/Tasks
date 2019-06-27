@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Tasks</string>
+    <string name="title_home">Home</string>
+    <string name="action_favorite">Favourite</string>
+    <string name="action_settings">Settings</string>
+    <string name="button">Button</string>
 </resources>
