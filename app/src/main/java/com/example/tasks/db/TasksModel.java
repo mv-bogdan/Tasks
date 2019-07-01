@@ -1,16 +1,14 @@
 package com.example.tasks.db;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
 
 public class TasksModel extends RealmObject {
 
-    @PrimaryKey
     private int id;
 
-    @Required
     private String name;
+
+    public TasksModel() { id = -1; name = "null"; }
 
     public String getName() {
         return name;

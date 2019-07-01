@@ -3,14 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_favorite"
-        android:icon="@drawable/ic_favorite_black"
-        android:title="@string/action_favorite"
-        app:showAsAction="ifRoom"/>
-
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
+        android:id="@+id/addItem"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_plus"
+        android:title="@string/action_create_new_task"
+        app:showAsAction="always" />
 </menu>
