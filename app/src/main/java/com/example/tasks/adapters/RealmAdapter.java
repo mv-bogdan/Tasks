@@ -29,18 +29,17 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         RealmViewHolder viewHolder = new RealmViewHolder(convertView);
 
         final TasksModel model = getRealmResults().get(position);
-        viewHolder.title.setText(model.getName());
-        viewHolder.ID.setText(model.getID());
+        viewHolder.title.setText(model.getTitle());
         viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new RealmController(context).removeItemById(getRealmResults().get(position).getID());
+                new RealmController(context).removeItemById(getRealmResults().get(position).getId());
             }
         });
         viewHolder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickListener.onEditButtonClick(model.getID(), model.getName());
+                onClickListener.onEditButtonClick(model.getId(), model.getTitle());
             }
         });
         return convertView;
@@ -54,9 +53,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
         @BindView(R.id.title)
         TextView title;
-
-        @BindView(R.id.description)
-        TextView ID;
 
         @BindView(R.id.editButton)
         ImageView editButton;

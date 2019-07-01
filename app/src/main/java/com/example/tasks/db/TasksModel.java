@@ -5,24 +5,24 @@ import io.realm.RealmObject;
 public class TasksModel extends RealmObject {
 
     private int id;
+    private String title;
 
-    private String name;
-
-    public TasksModel() { id = -1; name = "null"; }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getID() {
+    public int getId() {
         return id;
     }
 
-    public void setID(int id) {
+    public void setId(int id) {
         this.id = id;
     }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
 }

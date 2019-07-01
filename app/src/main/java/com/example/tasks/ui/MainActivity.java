@@ -1,11 +1,14 @@
 package com.example.tasks.ui;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.tasks.R;
 import com.example.tasks.adapters.RealmAdapter;
@@ -58,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         setupAdapter();
     }
 

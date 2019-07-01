@@ -2,31 +2,44 @@ package com.example.tasks.db;
 
 import android.content.Context;
 
-import com.example.tasks.db.TasksModel;
-
-import java.util.ArrayList;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class RealmController {
 
-    private Realm realm;
 
-    public RealmController(Context context) {
-        RealmConfiguration config = new RealmConfiguration.Builder(context).build();
+    private Realm realm;
+    private static RealmController instance;
+
+    private Context context;
+
+    public RealmController(Context cont) {
+
+        context = cont;
+
+//        RealmConfiguration config = new RealmConfiguration.Builder(context).build();
+//        realm.setDefaultConfiguration(config);
+//        realm = Realm.getDefaultInstance();
+
+        RealmConfiguration config = new RealmConfiguration.Builder(cont)
+                .deleteRealmIfMigrationNeeded()
+                .build();
         realm.setDefaultConfiguration(config);
         realm = Realm.getDefaultInstance();
+
     }
+
+
+
 
     public void addInfo(String title) {
         realm.beginTransaction();
 
         TasksModel realmObject = realm.createObject(TasksModel.class);
         int id = getNextKey();
-        realmObject.setID(id);
-        realmObject.setName(title);
+        realmObject.setId(id);
+        realmObject.setTitle(title);
         realm.commitTransaction();
     }
 
@@ -37,7 +50,7 @@ public class RealmController {
     public void updateInfo(int id, String title) {
         realm.beginTransaction();
         TasksModel realmObject = realm.where(TasksModel.class).equalTo("id", id).findFirst();
-        realmObject.setName(title);
+        realmObject.setTitle(title);
         realm.commitTransaction();
     }
 
