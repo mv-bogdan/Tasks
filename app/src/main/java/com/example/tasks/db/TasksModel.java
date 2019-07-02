@@ -6,6 +6,7 @@ public class TasksModel extends RealmObject {
 
     private int id;
     private String title;
+    private String date;
 
     public int getId() {
         return id;
@@ -15,6 +16,13 @@ public class TasksModel extends RealmObject {
         this.id = id;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getTitle() {
         return title;

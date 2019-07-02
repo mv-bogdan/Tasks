@@ -33,13 +33,14 @@ public class RealmController {
 
 
 
-    public void addInfo(String title) {
+    public void addInfo(String title, String date) {
         realm.beginTransaction();
 
         TasksModel realmObject = realm.createObject(TasksModel.class);
         int id = getNextKey();
         realmObject.setId(id);
         realmObject.setTitle(title);
+        realmObject.setDate(date);
         realm.commitTransaction();
     }
 
@@ -47,10 +48,11 @@ public class RealmController {
         return realm.where(TasksModel.class).findAll();
     }
 
-    public void updateInfo(int id, String title) {
+    public void updateInfo(int id, String title, String date) {
         realm.beginTransaction();
         TasksModel realmObject = realm.where(TasksModel.class).equalTo("id", id).findFirst();
         realmObject.setTitle(title);
+        realmObject.setDate(date);
         realm.commitTransaction();
     }
 

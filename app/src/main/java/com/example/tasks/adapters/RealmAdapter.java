@@ -1,5 +1,6 @@
 package com.example.tasks.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         super(context, realmResults, true);
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.task_standard_layout, parent, false);
@@ -30,6 +32,7 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
         final TasksModel model = getRealmResults().get(position);
         viewHolder.title.setText(model.getTitle());
+        viewHolder.date.setText(model.getDate());
         viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +42,7 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         viewHolder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickListener.onEditButtonClick(model.getId(), model.getTitle());
+                onClickListener.onEditButtonClick(model.getId(), model.getTitle(), model.getDate());
             }
         });
         return convertView;
@@ -53,6 +56,9 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
         @BindView(R.id.title)
         TextView title;
+
+        @BindView(R.id.date)
+        TextView date;
 
         @BindView(R.id.editButton)
         ImageView editButton;
@@ -70,6 +76,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
     }
 
     public interface OnClickListener {
-        void onEditButtonClick(int id, String title);
+        void onEditButtonClick(int id, String title, String date);
     }
 }

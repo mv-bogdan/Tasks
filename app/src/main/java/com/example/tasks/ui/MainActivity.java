@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
 
     public static final String TITLE = "title";
     public static final String ID = "id";
+    public static final String DATE = "date";
     public static final String IS_EDIT = "isEdit";
 
     @BindView(R.id.listView)
@@ -67,11 +68,12 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     }
 
     @Override
-    public void onEditButtonClick(int id, String title) {
+    public void onEditButtonClick(int id, String title, String date) {
         Intent intent = new Intent(this, AddItemActivity.class);
         intent.putExtra(IS_EDIT, true);
         intent.putExtra(ID, id);
         intent.putExtra(TITLE, title);
+        intent.putExtra(DATE, date);
         startActivity(intent);
     }
 }

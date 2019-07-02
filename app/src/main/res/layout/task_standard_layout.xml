@@ -25,6 +25,13 @@
                 android:text="TextView"
                 android:textSize="24sp" />
 
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -35,17 +42,18 @@
 
             <ImageView
                 android:id="@+id/editButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_edit"
-                android:contentDescription="@string/title_home"/>
+                android:layout_width="28dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/title_home"
+                android:src="@drawable/ic_edit" />
 
             <ImageView
                 android:id="@+id/removeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="28dp"
+                android:layout_height="31dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/ic_delete" />
+                android:src="@drawable/ic_delete"
+                android:contentDescription="TODO" />
         </LinearLayout>
 
     </LinearLayout>
