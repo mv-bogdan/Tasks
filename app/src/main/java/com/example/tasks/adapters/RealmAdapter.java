@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tasks.db.TasksModel;
@@ -33,16 +34,16 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         final TasksModel model = getRealmResults().get(position);
         viewHolder.title.setText(model.getTitle());
         viewHolder.date.setText(model.getDate());
-        viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
+//        viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new RealmController(context).removeItemById(getRealmResults().get(position).getId());
+//            }
+//        });
+        viewHolder.TaskLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new RealmController(context).removeItemById(getRealmResults().get(position).getId());
-            }
-        });
-        viewHolder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickListener.onEditButtonClick(model.getId(), model.getTitle(), model.getDate());
+                onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDate());
             }
         });
         return convertView;
@@ -60,11 +61,11 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         @BindView(R.id.date)
         TextView date;
 
-        @BindView(R.id.editButton)
-        ImageView editButton;
+        @BindView(R.id.TaskLayout)
+        LinearLayout TaskLayout;
 
-        @BindView(R.id.removeButton)
-        ImageView removeButton;
+//        @BindView(R.id.removeButton)
+//        ImageView removeButton;
 
         public RealmViewHolder(final View itemView) {
             ButterKnife.bind(this, itemView);
@@ -76,6 +77,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
     }
 
     public interface OnClickListener {
-        void onEditButtonClick(int id, String title, String date);
+        void onTaskLayoutClick(int id, String title, String date);
     }
 }

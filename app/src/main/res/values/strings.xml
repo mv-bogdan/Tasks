@@ -7,5 +7,8 @@
     <string name="action_create_new_task">New task</string>
     <string name="datePicker">Choose a date</string>
     <string name="title">Title</string>
-    <string name="add">Add</string>
+    <string name="add">add</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="date">date</string>
+    <string name="change_task">Change</string>
 </resources>

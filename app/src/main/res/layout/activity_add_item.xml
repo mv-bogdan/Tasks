@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -11,30 +10,50 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/title"
         android:inputType="textPersonName"
-        android:autofillHints=""
         tools:targetApi="o" />
 
     <EditText
         android:id="@+id/dateEdit"
-        android:clickable="true"
-        android:inputType="datetime"
-        android:hint="@string/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="false"
         android:autofillHints=""
+        android:clickable="true"
+        android:focusable="false"
+        android:hint="@string/datePicker"
+        android:inputType="datetime"
         tools:targetApi="o" />
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="376dp"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:onClick="onAddClick"
+        android:paddingStart="5dip"
+        android:paddingEnd="5dip"
         android:text="@string/add" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/delete_task_button"
+            android:layout_width="182dp"
+            android:layout_height="wrap_content"
+            android:onClick="onDeleteButtonClick"
+            android:text="@string/delete_task" />
+    </LinearLayout>
 
 </LinearLayout>
 

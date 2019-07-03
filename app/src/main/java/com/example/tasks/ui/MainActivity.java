@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     }
 
     @Override
-    public void onEditButtonClick(int id, String title, String date) {
+    public void onTaskLayoutClick(int id, String title, String date) {
         Intent intent = new Intent(this, AddItemActivity.class);
         intent.putExtra(IS_EDIT, true);
         intent.putExtra(ID, id);

@@ -3,6 +3,7 @@ package com.example.tasks.ui;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -32,6 +33,12 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.dateEdit)
     EditText dateEdit;
 
+    @BindView(R.id.delete_task_button)
+    Button deleteButton;
+
+    @BindView(R.id.addButton)
+    Button addButton;
+
 
     private boolean isEditMode = false;
     private String date;
@@ -51,7 +58,12 @@ public class AddItemActivity extends AppCompatActivity {
             id = getIntent().getExtras().getInt(ID);
             dateEdit.setText(getIntent().getExtras().getString(DATE));
         }
-
+        if (!isEditMode) {
+            deleteButton.setVisibility(View.INVISIBLE);
+        } else
+        {
+            addButton.setText(R.string.change_task);
+        }
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -82,6 +94,12 @@ public class AddItemActivity extends AppCompatActivity {
             new RealmController(this).addInfo(title.getText().toString(), dateEdit.getText().toString());
         else
             new RealmController(this).updateInfo(id, title.getText().toString(), dateEdit.getText().toString());
+        finish();
+    }
+
+    @OnClick(R.id.delete_task_button)
+    public void onDeleteButtonClick() {
+        new RealmController(this).removeItemById(id);
         finish();
     }
 
