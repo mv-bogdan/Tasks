@@ -3,17 +3,20 @@ package com.example.tasks.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.tasks.R;
 import com.example.tasks.adapters.RealmAdapter;
 import com.example.tasks.db.RealmController;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     @BindView(R.id.listView)
     ListView recyclerView;
 
+    @BindView(R.id.nav_view)
+    BottomNavigationView navView;
+
     private RealmAdapter realmAdapter;
 
     @Override
@@ -36,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setupAdapter();
     }
 
@@ -55,6 +61,22 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         }
         return super.onOptionsItemSelected(item);
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_active_tasks:
+
+                    return true;
+                case R.id.navigation_completed_tasks:
+
+                    return true;
+            }
+            return false;
+        }
+    };
 
     private void setupAdapter() {
         realmAdapter = new RealmAdapter(this, new RealmController(this).getInfo());
@@ -77,4 +99,9 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         intent.putExtra(DATE, date);
         startActivity(intent);
     }
+
+    @Override
+    public void onButtonCompleteClick(int id) {
+        // TODO : solve the completed tasks problem
+     }
 }

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,27 +30,34 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        convertView = inflater.inflate(R.layout.task_standard_layout, parent, false);
-        RealmViewHolder viewHolder = new RealmViewHolder(convertView);
 
         final TasksModel model = getRealmResults().get(position);
-        viewHolder.title.setText(model.getTitle());
-        viewHolder.date.setText(model.getDate());
-//        viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new RealmController(context).removeItemById(getRealmResults().get(position).getId());
-//            }
-//        });
-        viewHolder.TaskLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDate());
-            }
-        });
+
+        if (model.getStatus() == 0 || model.getStatus() == 1) {
+            convertView = inflater.inflate(R.layout.task_standard_layout, parent, false);
+            RealmViewHolder viewHolder = new RealmViewHolder(convertView);
+
+            viewHolder.title.setText(model.getTitle());
+            viewHolder.date.setText(model.getDate());
+            viewHolder.buttonComplete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new RealmController(context).changeStatusComplete(getRealmResults().get(position).getId());
+
+                    onClickListener.onButtonCompleteClick(model.getId());
+                }
+            });
+            viewHolder.TaskLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDate());
+                }
+            });
+        } else {
+            convertView = inflater.inflate(R.layout.task_empty_layout, parent, false);
+        }
         return convertView;
     }
-
     public RealmResults<TasksModel> getRealmResults() {
         return realmResults;
     }
@@ -64,8 +73,8 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         @BindView(R.id.TaskLayout)
         LinearLayout TaskLayout;
 
-//        @BindView(R.id.removeButton)
-//        ImageView removeButton;
+        @BindView(R.id.buttonComplete)
+        Button buttonComplete;
 
         public RealmViewHolder(final View itemView) {
             ButterKnife.bind(this, itemView);
@@ -78,5 +87,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
     public interface OnClickListener {
         void onTaskLayoutClick(int id, String title, String date);
+        void onButtonCompleteClick(int id);
     }
 }

@@ -5,7 +5,6 @@
     <item
         android:id="@+id/addItem"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_plus"
         android:title="@string/action_create_new_task"
         app:showAsAction="always" />
 </menu>

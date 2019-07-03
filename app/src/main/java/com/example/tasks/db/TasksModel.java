@@ -7,6 +7,7 @@ public class TasksModel extends RealmObject {
     private int id;
     private String title;
     private String date;
+    private int status;
 
     public int getId() {
         return id;
@@ -32,5 +33,7 @@ public class TasksModel extends RealmObject {
         this.title = title;
     }
 
+    public int getStatus() { return status; }
 
+    public void setStatus(int status) { this.status = status; }
 }

@@ -11,4 +11,7 @@
     <string name="delete_task">Delete Task</string>
     <string name="date">date</string>
     <string name="change_task">Change</string>
+    <string name="button_complete">Complete</string>
+    <string name="title_nav_active_tasks">Active Tasks</string>
+    <string name="title_nav_completed_tasks">Completed Tasks</string>
 </resources>

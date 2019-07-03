@@ -1,6 +1,7 @@
 package com.example.tasks.db;
 
 import android.content.Context;
+import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -41,6 +42,7 @@ public class RealmController {
         realmObject.setId(id);
         realmObject.setTitle(title);
         realmObject.setDate(date);
+        realmObject.setStatus(0);
         realm.commitTransaction();
     }
 
@@ -65,5 +67,17 @@ public class RealmController {
 
     private int getNextKey() {
         return realm.where(TasksModel.class).max("id").intValue() + 1;
+    }
+
+    public void changeStatusComplete(int id) {
+        realm.beginTransaction();
+        TasksModel realmObject = realm.where(TasksModel.class).equalTo("id", id).findFirst();
+        if (realmObject.getStatus() == 0) {
+            realmObject.setStatus(1);
+        } else {
+            realmObject.setStatus(0);
+        }
+        realm.commitTransaction();
+        Log.d("checkBox", ""+realmObject.getStatus());
     }
 }
