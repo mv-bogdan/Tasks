@@ -50,6 +50,14 @@ public class RealmController {
         return realm.where(TasksModel.class).findAll();
     }
 
+    public RealmResults<TasksModel> getActiveTasks() {
+        return realm.where(TasksModel.class).equalTo("status", 0).findAll();
+    }
+
+    public RealmResults<TasksModel> getCompletedTasks() {
+        return realm.where(TasksModel.class).equalTo("status", 1).findAll();
+    }
+
     public void updateInfo(int id, String title, String date) {
         realm.beginTransaction();
         TasksModel realmObject = realm.where(TasksModel.class).equalTo("id", id).findFirst();

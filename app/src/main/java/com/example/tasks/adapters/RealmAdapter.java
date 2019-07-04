@@ -24,8 +24,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
     private OnClickListener onClickListener;
 
-    private int CurrentBottomMenuElement = 0;
-
     public RealmAdapter(Context context, RealmResults<TasksModel> realmResults) {
         super(context, realmResults, true);
     }
@@ -36,8 +34,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
         final TasksModel model = getRealmResults().get(position);
 
-        if (model.getStatus() == CurrentBottomMenuElement) {
-            Log.d("log", ""+CurrentBottomMenuElement);
             convertView = inflater.inflate(R.layout.task_standard_layout, parent, false);
             RealmViewHolder viewHolder = new RealmViewHolder(convertView);
 
@@ -58,10 +54,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
                 }
 
             });
-
-        } else {
-            convertView = inflater.inflate(R.layout.task_empty_layout, parent, false);
-        }
         return convertView;
     }
     public RealmResults<TasksModel> getRealmResults() {
@@ -91,9 +83,7 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         this.onClickListener = onClickListener;
     }
 
-    public void onChangeCurrentBottomMenu(int n) {
-        CurrentBottomMenuElement = n;
-        Log.d("log", ""+CurrentBottomMenuElement);
+    public void onChangeCurrentBottomMenu() {
         super.notifyDataSetChanged();
     }
 

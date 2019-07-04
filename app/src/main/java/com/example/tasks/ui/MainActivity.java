@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
 
     private RealmAdapter realmAdapter;
 
+    private int CurrentBottomMenuElement;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +71,14 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_active_tasks:
-                    realmAdapter.onChangeCurrentBottomMenu(0);
-
+                    CurrentBottomMenuElement = 0;
+                    realmAdapter.onChangeCurrentBottomMenu();
+                    setupAdapter();
                     return true;
                 case R.id.navigation_completed_tasks:
-                    realmAdapter.onChangeCurrentBottomMenu(1);
-
+                    CurrentBottomMenuElement = 1;
+                    realmAdapter.onChangeCurrentBottomMenu();
+                    setupAdapter();
                     return true;
             }
             return false;
@@ -82,7 +86,11 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     };
 
     private void setupAdapter() {
-        realmAdapter = new RealmAdapter(this, new RealmController(this).getInfo());
+        if (CurrentBottomMenuElement == 0) {
+            realmAdapter = new RealmAdapter(this, new RealmController(this).getActiveTasks());
+        } else  if (CurrentBottomMenuElement == 1) {
+            realmAdapter = new RealmAdapter(this, new RealmController(this).getCompletedTasks());
+        }
         realmAdapter.setOnClickListener(this);
         recyclerView.setAdapter(realmAdapter);
     }
