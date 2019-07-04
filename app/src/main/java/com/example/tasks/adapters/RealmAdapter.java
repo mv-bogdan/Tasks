@@ -2,6 +2,7 @@ package com.example.tasks.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +24,8 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
     private OnClickListener onClickListener;
 
+    private int CurrentBottomMenuElement = 0;
+
     public RealmAdapter(Context context, RealmResults<TasksModel> realmResults) {
         super(context, realmResults, true);
     }
@@ -33,7 +36,8 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
         final TasksModel model = getRealmResults().get(position);
 
-        if (model.getStatus() == 0 || model.getStatus() == 1) {
+        if (model.getStatus() == CurrentBottomMenuElement) {
+            Log.d("log", ""+CurrentBottomMenuElement);
             convertView = inflater.inflate(R.layout.task_standard_layout, parent, false);
             RealmViewHolder viewHolder = new RealmViewHolder(convertView);
 
@@ -52,7 +56,9 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
                 public void onClick(View view) {
                     onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDate());
                 }
+
             });
+
         } else {
             convertView = inflater.inflate(R.layout.task_empty_layout, parent, false);
         }
@@ -83,6 +89,12 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
 
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
+    }
+
+    public void onChangeCurrentBottomMenu(int n) {
+        CurrentBottomMenuElement = n;
+        Log.d("log", ""+CurrentBottomMenuElement);
+        super.notifyDataSetChanged();
     }
 
     public interface OnClickListener {

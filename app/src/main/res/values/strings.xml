@@ -14,4 +14,9 @@
     <string name="button_complete">Complete</string>
     <string name="title_nav_active_tasks">Active Tasks</string>
     <string name="title_nav_completed_tasks">Completed Tasks</string>
+    <string name="frag_active_text">Active Tasks</string>
+    <string name="frag_completed_text">Completed Tasks</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

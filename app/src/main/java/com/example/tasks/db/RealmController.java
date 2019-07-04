@@ -72,11 +72,7 @@ public class RealmController {
     public void changeStatusComplete(int id) {
         realm.beginTransaction();
         TasksModel realmObject = realm.where(TasksModel.class).equalTo("id", id).findFirst();
-        if (realmObject.getStatus() == 0) {
-            realmObject.setStatus(1);
-        } else {
-            realmObject.setStatus(0);
-        }
+        realmObject.setStatus(1);
         realm.commitTransaction();
         Log.d("checkBox", ""+realmObject.getStatus());
     }

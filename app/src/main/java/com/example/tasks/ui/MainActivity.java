@@ -12,6 +12,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.tasks.R;
 import com.example.tasks.adapters.RealmAdapter;
 import com.example.tasks.db.RealmController;
@@ -68,9 +69,11 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_active_tasks:
+                    realmAdapter.onChangeCurrentBottomMenu(0);
 
                     return true;
                 case R.id.navigation_completed_tasks:
+                    realmAdapter.onChangeCurrentBottomMenu(1);
 
                     return true;
             }
