@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.tasks.ui.MainActivity.ID;
+import static com.example.tasks.ui.MainActivity.IS_COMPLETED;
 import static com.example.tasks.ui.MainActivity.IS_EDIT;
 import static com.example.tasks.ui.MainActivity.TITLE;
 import static com.example.tasks.ui.MainActivity.DATE;
@@ -41,6 +42,7 @@ public class AddItemActivity extends AppCompatActivity {
 
 
     private boolean isEditMode = false;
+    private boolean isCompletedMode = false;
     private String date;
     private int id;
 
@@ -54,6 +56,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         if(getIntent().getExtras() != null) {
             isEditMode = getIntent().getExtras().getBoolean(IS_EDIT);
+            isCompletedMode = getIntent().getExtras().getBoolean(IS_COMPLETED);
             title.setText(getIntent().getExtras().getString(TITLE));
             id = getIntent().getExtras().getInt(ID);
             dateEdit.setText(getIntent().getExtras().getString(DATE));
@@ -63,6 +66,12 @@ public class AddItemActivity extends AppCompatActivity {
         } else
         {
             addButton.setText(R.string.change_task);
+        }
+        if (isCompletedMode) {
+            title.setEnabled(false);
+            dateEdit.setEnabled(false);
+            //deleteButton.setVisibility(View.INVISIBLE);
+            addButton.setVisibility(View.INVISIBLE);
         }
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 

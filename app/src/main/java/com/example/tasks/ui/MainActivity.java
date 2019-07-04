@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     public static final String ID = "id";
     public static final String DATE = "date";
     public static final String IS_EDIT = "isEdit";
+    public static final String IS_COMPLETED = "isCompleted";
 
     @BindView(R.id.listView)
     ListView recyclerView;
@@ -102,17 +103,13 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     }
 
     @Override
-    public void onTaskLayoutClick(int id, String title, String date) {
+    public void onTaskLayoutClick(int id, String title, String date, boolean isCompleted) {
         Intent intent = new Intent(this, AddItemActivity.class);
         intent.putExtra(IS_EDIT, true);
         intent.putExtra(ID, id);
         intent.putExtra(TITLE, title);
         intent.putExtra(DATE, date);
+        intent.putExtra(IS_COMPLETED, isCompleted);
         startActivity(intent);
     }
-
-    @Override
-    public void onButtonCompleteClick(int id) {
-        // TODO : solve the completed tasks problem
-     }
 }

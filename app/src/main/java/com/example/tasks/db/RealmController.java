@@ -43,6 +43,7 @@ public class RealmController {
         realmObject.setTitle(title);
         realmObject.setDate(date);
         realmObject.setStatus(0);
+        realmObject.setCompletedIn(0);
         realm.commitTransaction();
     }
 
@@ -81,7 +82,7 @@ public class RealmController {
         realm.beginTransaction();
         TasksModel realmObject = realm.where(TasksModel.class).equalTo("id", id).findFirst();
         realmObject.setStatus(1);
+        realmObject.setCompletedIn(System.currentTimeMillis());
         realm.commitTransaction();
-        Log.d("checkBox", ""+realmObject.getStatus());
     }
 }
