@@ -2,7 +2,7 @@ package com.example.tasks.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -41,7 +41,10 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
             RealmViewActiveTaskHolder viewHolder = new RealmViewActiveTaskHolder(convertView);
 
             viewHolder.title.setText(model.getTitle());
-            viewHolder.date.setText(model.getDate());
+            viewHolder.date.setText(DateUtils.formatDateTime(context,
+                    model.getDateComplete(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+                            | DateUtils.FORMAT_SHOW_TIME));
             viewHolder.buttonComplete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -51,7 +54,7 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
             viewHolder.TaskLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDate(), false);
+                    onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDateComplete(), false);
                 }
             });
         } else {
@@ -59,13 +62,16 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
             RealmViewCompletedTaskHolder viewHolder = new RealmViewCompletedTaskHolder(convertView);
 
             viewHolder.title.setText(model.getTitle());
-            viewHolder.date.setText(model.getDate());
+            viewHolder.date.setText(DateUtils.formatDateTime(context,
+                    model.getDateComplete(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+                            | DateUtils.FORMAT_SHOW_TIME));
             String t = getFormattedDateFromTimestamp(model.getCompletedIn());
             viewHolder.completedIn.setText(t);
             viewHolder.TaskLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDate(), true);
+                    onClickListener.onTaskLayoutClick(model.getId(), model.getTitle(), model.getDateComplete(), true);
                 }
             });
         }
@@ -80,7 +86,7 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         @BindView(R.id.title)
         TextView title;
 
-        @BindView(R.id.date)
+        @BindView(R.id.dateComplete)
         TextView date;
 
         @BindView(R.id.TaskLayout)
@@ -99,7 +105,7 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
         @BindView(R.id.title)
         TextView title;
 
-        @BindView(R.id.date)
+        @BindView(R.id.dateComplete)
         TextView date;
 
         @BindView(R.id.TaskLayout)
@@ -132,6 +138,6 @@ public class RealmAdapter extends RealmBaseAdapter<TasksModel> {
     }
 
     public interface OnClickListener {
-        void onTaskLayoutClick(int id, String title, String date, boolean isCompleted);
+        void onTaskLayoutClick(int id, String title, long dateComplete, boolean isCompleted);
     }
 }

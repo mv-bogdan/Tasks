@@ -23,6 +23,7 @@
         android:autofillHints=""
         android:clickable="true"
         android:focusable="false"
+        android:onClick="onTimeClick"
         android:hint="@string/datePicker"
         android:inputType="datetime"
         tools:targetApi="o" />

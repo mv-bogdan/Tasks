@@ -6,7 +6,7 @@ public class TasksModel extends RealmObject {
 
     private int id;
     private String title;
-    private String date;
+    private long dateComplete;
     private int status;
     private long completedIn;
 
@@ -18,12 +18,12 @@ public class TasksModel extends RealmObject {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
+    public long getDateComplete() {
+        return dateComplete;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateComplete(long dateComplete) {
+        this.dateComplete = dateComplete;
     }
 
     public String getTitle() {

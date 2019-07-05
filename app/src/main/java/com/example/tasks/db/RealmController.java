@@ -1,7 +1,6 @@
 package com.example.tasks.db;
 
 import android.content.Context;
-import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -19,10 +18,6 @@ public class RealmController {
 
         context = cont;
 
-//        RealmConfiguration config = new RealmConfiguration.Builder(context).build();
-//        realm.setDefaultConfiguration(config);
-//        realm = Realm.getDefaultInstance();
-
         RealmConfiguration config = new RealmConfiguration.Builder(cont)
                 .deleteRealmIfMigrationNeeded()
                 .build();
@@ -31,23 +26,20 @@ public class RealmController {
 
     }
 
-
-
-
-    public void addInfo(String title, String date) {
+    public void addInfo(String title, long dateComplete) {
         realm.beginTransaction();
 
         TasksModel realmObject = realm.createObject(TasksModel.class);
         int id = getNextKey();
         realmObject.setId(id);
         realmObject.setTitle(title);
-        realmObject.setDate(date);
+        realmObject.setDateComplete(dateComplete);
         realmObject.setStatus(0);
         realmObject.setCompletedIn(0);
         realm.commitTransaction();
     }
 
-    public RealmResults<TasksModel> getInfo() {
+    public RealmResults<TasksModel> getAllTasks() {
         return realm.where(TasksModel.class).findAll();
     }
 
@@ -59,11 +51,11 @@ public class RealmController {
         return realm.where(TasksModel.class).equalTo("status", 1).findAll();
     }
 
-    public void updateInfo(int id, String title, String date) {
+    public void updateInfo(int id, String title, long dateComplete) {
         realm.beginTransaction();
         TasksModel realmObject = realm.where(TasksModel.class).equalTo("id", id).findFirst();
         realmObject.setTitle(title);
-        realmObject.setDate(date);
+        realmObject.setDateComplete(dateComplete);
         realm.commitTransaction();
     }
 

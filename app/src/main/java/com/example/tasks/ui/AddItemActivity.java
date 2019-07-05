@@ -1,11 +1,15 @@
 package com.example.tasks.ui;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,26 +44,29 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.addButton)
     Button addButton;
 
-
     private boolean isEditMode = false;
     private boolean isCompletedMode = false;
     private String date;
     private int id;
 
-    final Calendar myCalendar = Calendar.getInstance();
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
         ButterKnife.bind(this);
+        setInitialDateTime();
 
         if(getIntent().getExtras() != null) {
             isEditMode = getIntent().getExtras().getBoolean(IS_EDIT);
             isCompletedMode = getIntent().getExtras().getBoolean(IS_COMPLETED);
             title.setText(getIntent().getExtras().getString(TITLE));
             id = getIntent().getExtras().getInt(ID);
-            dateEdit.setText(getIntent().getExtras().getString(DATE));
+            dateEdit.setText(DateUtils.formatDateTime(this,
+                    getIntent().getExtras().getLong(DATE),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+                            | DateUtils.FORMAT_SHOW_TIME));
         }
         if (!isEditMode) {
             deleteButton.setVisibility(View.INVISIBLE);
@@ -73,36 +80,50 @@ public class AddItemActivity extends AppCompatActivity {
             //deleteButton.setVisibility(View.INVISIBLE);
             addButton.setVisibility(View.INVISIBLE);
         }
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-
-        };
-
-        dateEdit.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(AddItemActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
     }
+
+    private void setInitialDateTime() {
+        dateEdit.setText(DateUtils.formatDateTime(this,
+                myCalendar.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+                        | DateUtils.FORMAT_SHOW_TIME));
+    }
+
+    public void onTimeClick(View v) {
+        new TimePickerDialog(AddItemActivity.this, t,
+                myCalendar.get(Calendar.HOUR_OF_DAY),
+                myCalendar.get(Calendar.MINUTE), true)
+                .show();
+        new DatePickerDialog(AddItemActivity.this, d,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            myCalendar.set(Calendar.MINUTE, minute);
+            setInitialDateTime();
+        }
+    };
+
+    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setInitialDateTime();
+        }
+    };
 
     @OnClick(R.id.addButton)
     public void onAddClick() {
         if(!isEditMode)
-            new RealmController(this).addInfo(title.getText().toString(), dateEdit.getText().toString());
+            new RealmController(this).addInfo(title.getText().toString(), myCalendar.getTimeInMillis());
         else
-            new RealmController(this).updateInfo(id, title.getText().toString(), dateEdit.getText().toString());
+            new RealmController(this).updateInfo(id, title.getText().toString(), myCalendar.getTimeInMillis());
         finish();
     }
 
@@ -110,12 +131,5 @@ public class AddItemActivity extends AppCompatActivity {
     public void onDeleteButtonClick() {
         new RealmController(this).removeItemById(id);
         finish();
-    }
-
-    private void updateLabel() {
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        dateEdit.setText(sdf.format(myCalendar.getTime()));
     }
 }
