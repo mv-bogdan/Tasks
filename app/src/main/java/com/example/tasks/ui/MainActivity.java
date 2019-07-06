@@ -1,7 +1,12 @@
 package com.example.tasks.ui;
 
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,10 +17,13 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.tasks.R;
 import com.example.tasks.adapters.RealmAdapter;
 import com.example.tasks.db.RealmController;
+import com.example.tasks.notifications.TasksNotifications;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         ButterKnife.bind(this);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setupAdapter();
+        createNotificationChannel();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
 
     @Override
     public void onTaskLayoutClick(int id, String title, long dateComplete, boolean isCompleted) {
+        TasksNotifications.createNotification(this);
         Intent intent = new Intent(this, AddItemActivity.class);
         intent.putExtra(IS_EDIT, true);
         intent.putExtra(ID, id);
@@ -112,4 +122,18 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         intent.putExtra(IS_COMPLETED, isCompleted);
         startActivity(intent);
     }
+
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("TasksChannel", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+
 }
