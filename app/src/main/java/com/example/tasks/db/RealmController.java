@@ -59,6 +59,10 @@ public class RealmController {
         realm.commitTransaction();
     }
 
+    public TasksModel findItemById(int id) {
+       return realm.where(TasksModel.class).equalTo("id", id).findFirst();
+    }
+
     public void removeItemById(int id) {
         realm.beginTransaction();
         RealmResults<TasksModel> rows = realm.where(TasksModel.class).equalTo("id", id).findAll();

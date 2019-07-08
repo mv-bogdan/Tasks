@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         ButterKnife.bind(this);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setupAdapter();
-        createNotificationChannel();
+       // createNotificationChannel();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
 
     @Override
     public void onTaskLayoutClick(int id, String title, long dateComplete, boolean isCompleted) {
-        TasksNotifications.createNotification(this);
+       // TasksNotifications.createNotification(this);
         Intent intent = new Intent(this, AddItemActivity.class);
         intent.putExtra(IS_EDIT, true);
         intent.putExtra(ID, id);
@@ -122,18 +122,4 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
         intent.putExtra(IS_COMPLETED, isCompleted);
         startActivity(intent);
     }
-
-    public void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("TasksChannel", name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-
 }

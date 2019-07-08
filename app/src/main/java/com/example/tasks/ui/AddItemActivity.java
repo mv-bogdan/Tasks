@@ -1,10 +1,14 @@
 package com.example.tasks.ui;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,13 +16,14 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.JobIntentService;
 
 import com.example.tasks.R;
 import com.example.tasks.db.RealmController;
+import com.example.tasks.receivers.NotificationReceiver;
+import com.example.tasks.services.NotificationsService;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +34,8 @@ import static com.example.tasks.ui.MainActivity.IS_COMPLETED;
 import static com.example.tasks.ui.MainActivity.IS_EDIT;
 import static com.example.tasks.ui.MainActivity.TITLE;
 import static com.example.tasks.ui.MainActivity.DATE;
+
+import com.example.tasks.alarms.TasksAlarm;
 
 public class AddItemActivity extends AppCompatActivity {
 
@@ -48,6 +55,7 @@ public class AddItemActivity extends AppCompatActivity {
     private boolean isCompletedMode = false;
     private String date;
     private int id;
+    private static final int NOTIFICATION_JOB_ID = 1000;
 
     Calendar myCalendar = Calendar.getInstance();
 
@@ -124,6 +132,11 @@ public class AddItemActivity extends AppCompatActivity {
             new RealmController(this).addInfo(title.getText().toString(), myCalendar.getTimeInMillis());
         else
             new RealmController(this).updateInfo(id, title.getText().toString(), myCalendar.getTimeInMillis());
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        intent.putExtra(ID, id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pendingIntent);
         finish();
     }
 
