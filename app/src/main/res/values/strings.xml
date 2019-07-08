@@ -26,7 +26,7 @@
     <string name="TasksNotificationSwitch">Add notifications an hour before completion</string>
 
     <!-- TODO: remove this placeholder text -->
-    <string name="simple_task_notification_placeholder_text_template"> Tap to complete the task:  %1$s.</string>
+    <string name="simple_task_notification_placeholder_text_template"> Tap to complete the task.</string>
 
     <string name="action_complete">Complete</string>
     <string name="action_reply">Reply</string>

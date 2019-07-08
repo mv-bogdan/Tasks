@@ -28,7 +28,7 @@ public class SimpleTaskNotification {
         final String ticker = exampleString;
         final String title = taskName + ": " + exampleString;
         final String text = res.getString(
-                R.string.simple_task_notification_placeholder_text_template, exampleString);
+                R.string.simple_task_notification_placeholder_text_template);
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_stat_simple_task)

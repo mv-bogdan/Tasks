@@ -128,12 +128,14 @@ public class AddItemActivity extends AppCompatActivity {
 
     @OnClick(R.id.addButton)
     public void onAddClick() {
+        String taskName = title.getText().toString();
         if(!isEditMode)
             new RealmController(this).addInfo(title.getText().toString(), myCalendar.getTimeInMillis());
         else
             new RealmController(this).updateInfo(id, title.getText().toString(), myCalendar.getTimeInMillis());
         Intent intent = new Intent(this, NotificationReceiver.class);
         intent.putExtra(ID, id);
+        intent.putExtra(TITLE, title.getText().toString());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pendingIntent);
