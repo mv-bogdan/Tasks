@@ -133,6 +133,7 @@ public class AddItemActivity extends AppCompatActivity {
             new RealmController(this).addInfo(title.getText().toString(), myCalendar.getTimeInMillis());
         else
             new RealmController(this).updateInfo(id, title.getText().toString(), myCalendar.getTimeInMillis());
+        // https://developer.android.com/training/scheduling/alarms
         Intent intent = new Intent(this, NotificationReceiver.class);
         intent.putExtra(ID, id);
         intent.putExtra(TITLE, title.getText().toString());

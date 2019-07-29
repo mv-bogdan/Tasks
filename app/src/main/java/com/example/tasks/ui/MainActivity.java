@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements RealmAdapter.OnCl
     private void setupAdapter() {
         if (CurrentBottomMenuElement == 0) {
             realmAdapter = new RealmAdapter(this, new RealmController(this).getActiveTasks());
-        } else  if (CurrentBottomMenuElement == 1) {
+        } else if (CurrentBottomMenuElement == 1) {
             realmAdapter = new RealmAdapter(this, new RealmController(this).getCompletedTasks());
         }
         realmAdapter.setOnClickListener(this);
